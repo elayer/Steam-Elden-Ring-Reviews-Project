@@ -15,7 +15,7 @@ LDA (Latent Dirichlet Analysis) and LSA (Latent Semantic Analysis) to extract to
 
 **Python Version:** 3.8.5
 
-**Packages:** numpy, pandas, requests, beautiful soup, matplotlib, seaborn, sklearn, huggingface transformers, pytorch, nltk, gensim, re
+**Packages:** numpy, pandas, requests, beautiful soup, matplotlib, seaborn, sklearn, huggingface transformers, pytorch, nltk, gensim, spacy, re
 
 **Web Framework Requirements Command:** ```pip install -r requirements.txt```
 
@@ -24,42 +24,43 @@ LDA (Latent Dirichlet Analysis) and LSA (Latent Semantic Analysis) to extract to
 * Various project structure and process elements were learned from Ken Jee's YouTube series: 
 https://www.youtube.com/watch?v=MpF9HENQjDo&list=PL2zq7klxX5ASFejJj80ob9ZAnBHdz5O1t
 
-* CatBoost Regression article: 
-https://towardsdatascience.com/catboost-regression-in-6-minutes-3487f3e5b329
+* Helpful information on how to scrap Steam reviews:
+https://andrew-muller.medium.com/scraping-steam-user-reviews-9a43f9e38c92
+
+* Elaborate and effective PyTorch structure and architecture nuances I learned in this Kaggle notebook from a competition I participated in to learn:
+https://www.kaggle.com/code/yasufuminakama/nbme-deberta-base-baseline-train
+
+* LSA in Python implementation guide: 
+https://towardsdatascience.com/latent-semantic-analysis-sentiment-classification-with-python-5f657346f6a3
+
+* LDA in Python implementation guide: 
+https://towardsdatascience.com/topic-modelling-in-python-with-spacy-and-gensim-dc8f7748bdbf
+
 
 ## Web Scraping:
 
-Created a web scraper using Requests and Beauitful Soup. From each product listing page from Amazon, the following information was obtained:
-*   Brand
-*   Avg. Ratings
-*   Number of Ratings
-*   Processor Type
-*   RAM
-*   Disk Size
-*   Processor Speed
-*   Bluetooth
-*   Liquid Cooled
-*   Price
+Created a web scraper using Requests and Beauitful Soup. Using the Steam scraper, I obtained the following information from each record of reviews (relevant to project):
+*   Language
+*   Review
+*   Voted Up (Recommended)
+*   Votes Up
+*   Votes Funny
+*   Weighted Vote Score (helpfulness)
+*   Comment Count
+*   Steam Purchase
+*   Received for Free
 
 ## Data Cleaning
 
-After collecting data, I performed several steps to clean and refine the data to prepare for further processing and model building. I went through the following steps to clean and prepare the data:
+After collecting data, I performed several necessary text cleaning steps in order to analyze the corpus and perform EDA. I went through the following steps to clean and prepare the data:
 
-* Parsed the brand name out of the general product information collected from the listings
+* Loaded the spacy English corpus and updated the stop words list to include /n and /t
 
-* Created Liquid Cooled and Bluetooth attributes by parsing the product information for if it contained the capability for these features
+* With each review separated in a separate list, I lemmatized the text to keep only the root word and lowercased each word
 
-* Coalesced the processor types written differently to be uniform across the data and removed any outliers 
+* Then, I only kept words that were not punctuation and were either numeric or alphabetic characters of text
 
-* Reformatted the price, number of ratings, and avg. ratings columns to be appropriate numeric values. Dropped rows that had no price target variable
-
-* Reformatted and rescaled Processor speed, RAM, and disk size to numeric values and scaled each attribute to GB
-
-*   Removed outliers from the data that had very extreme value using <b>Z-Score</b>
-
-* Ordinally encoded processor tpyes and dropped the records that were extremely underrepresented
-
-* Created dummy variables for the brands of the computers that were not extremely underrepresented
+* Lastly, in order to maintain the integrity of the reviews, I dropped reviews that were less than 15 characters long to maintain reviews conducive to NLP algorithms. I also removed reviews more than 512 characters long for the PyTorch model to operate on the reviews correctly
 
 ## EDA
 Some noteable findings from performing exploratory data analysis can be seen below. When going from a low to more high-end processor, the price of a computer does indeed increase. The same applies to RAM. In addition, I noticed some brands were priced higher even with similar or lower amounts of disk space. I eventually found that just as big of a driver in price was the brand of a computer, and not only the specs.
