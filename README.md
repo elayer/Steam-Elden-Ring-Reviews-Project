@@ -4,8 +4,7 @@
 
 * Tokenized the review text to conduct N-Gram analysis, create word clouds, and construct data to be fed into NLP models (namely Sentiment Analysis).
 
-* Began model building by using Naive Bayes, SGD Classifier and Logistic Regression to perform Sentiment Analysis. Following this, I built a deep learning 
-PyTorch model utilizing HuggingFace transformers. Here, I used the RoBERTa model.
+* To perform Sentiment Classification, I began model building by using Naive Bayes, SGD Classifier and Logistic Regression. Following this, I built a deep learning PyTorch model utilizing HuggingFace transformers. Here, I used the RoBERTa model.
 
 * Lastly, to analyze the topics of discussion among the apps to track down potential areas of game improvement and reception of the game itself, I performed 
 LDA (Latent Dirichlet Analysis) and LSA (Latent Semantic Analysis) to extract topic information and key distinguishing words in the text corpus.
@@ -63,36 +62,39 @@ After collecting data, I performed several necessary text cleaning steps in orde
 * Lastly, in order to maintain the integrity of the reviews, I dropped reviews that were less than 15 characters long to maintain reviews conducive to NLP algorithms. I also removed reviews more than 512 characters long for the PyTorch model to operate on the reviews correctly
 
 ## EDA
-Some noteable findings from performing exploratory data analysis can be seen below. When going from a low to more high-end processor, the price of a computer does indeed increase. The same applies to RAM. In addition, I noticed some brands were priced higher even with similar or lower amounts of disk space. I eventually found that just as big of a driver in price was the brand of a computer, and not only the specs.
+Some noteable findings from performing exploratory data analysis can be seen below. I found from looking at the Bi-Grams of the words in the reviews corpus, a lot of them primarily vaunted the game with a few exceptions mainly geared at pointing out performance issues. Similar sentiments can be seen in uni and tri-grams as well. The Chi2 influential term analysis graph is the most interesting to me. I found words that primarily distinguish between positive and negative reviews dealt with screen ultrawide support and performance issues such as crashes. The last picture looks at the LDA results chart, with one topic being comprised of positive comments. The negative topic comprises mainly words related to the performance of the game.
 
-![alt text](https://github.com/elayer/Amazon-Computer-Project/blob/main/price-by-processor-type.png "Processor Type Boxplots")
-![alt text](https://github.com/elayer/Amazon-Computer-Project/blob/main/price-histogram.png "Price Distribution")
-![alt text](https://github.com/elayer/Amazon-Computer-Project/blob/main/price-by-RAM-boxplots.png "RAM Boxplots")
-![alt text](https://github.com/elayer/Amazon-Computer-Project/blob/main/price-to-brand-lmplots.png "RAM vs. Price per Brand")
+![alt text](https://github.com/elayer/Steam-Elden-Ring-Reviews-Project/blob/main/bigrams_picture.png "BiGrams Counts")
+![alt text](https://github.com/elayer/Steam-Elden-Ring-Reviews-Project/blob/main/stylecloud.png "Word Stylecloud")
+![alt text](https://github.com/elayer/Steam-Elden-Ring-Reviews-Project/blob/main/chi2_picture.png "Chi2 Influential Words")
+![alt text](https://github.com/elayer/Steam-Elden-Ring-Reviews-Project/blob/main/lda_picture.png "LDA Topic Example")
 
-## Model Building
-Before building any models, I transformed the categorical variables into appropriate numeric types. I transformed brand into dummy variables since some of the more expensive computers were similar in distribution of price, and the same goes for less expensive computers. I then ordinally encoded the processor types since each type seemed to have a steady increase in price as you improved the quality of the processor.
+## Model Building (Sentiment Classification)
+Before building any models, I transformed the text using Tfidf Vectorizer and Count Vectorizer in order to make the data trainable. 
 
-I first tried a few different linear models and some variations of them:
+* I started model building with Naive Bayes. From here, confusion matrix results improved as I moved to using the SGD classifier, and then Logistic Regression. 
 
-* Starting with Linear regression, and then trying Lasso, Ridge, and ElasticNet to see if the results would change since we have many binary columns. 
+* I then attempted to use PyTorch with the HuggingFace Transformer library (namely, using RoBERTa) to maximize sentiment classification results. Although RoBERTA with PyTorch performed better than Logistic Regression, Logistic Regression achieved good results as well albeit the recall for non-recommended reviews being low. 
 
-* This then led me to try Random Forest, XGBoost, and CatBoost regression because of the sparse binary/categorical nature of most of the attributes in the data. 
 
-## Model Performance
-The Random Forest, XGBoost, and CatBoost regression models respectively had improved performances. These models considerably outperformed the linear regression models I tried previously. Below are the R2 score values for the models:
+## Model Performance (Sentiment Classification)
+The Naive Bayes, SGDClassifier, and Logistic Regression models resptively achieved improved results. I then built the PyTorch model with HuggingFace. Since training the entire model with PyTorch using just 4 Epochs and 5 folds for cross validation would have taken more than 4 days on my computer, I only used on epoch on one fold. After this, I gathered the results of the model based on only that much training.
 
-* Linear Regression: 72.28 (the best of the linear models as a baseline)
+<b>(The possible labels for classification here are 0 : Non-recommended and 1 : Recommended)</b>
 
-* Random Forest Regression: 83.76
+Below are the Macro F1 Scores of each model built:
 
-* XGBoost Regression: 85.38
+* Naive Bayes: 0.48
 
-* CatBoost Regression: 85.87
+* SGD Classifier (SVM using Hinge Loss): 0.69
 
-I used Optuna with XGBoost and CatBoost to build an optimized model especially with the various attributes that these algorithms have. Since the data used is very sparse or represent specific definitive values (categories), it makes sense that the tree-based methods perform much better. 
+* Logistic Regression: 0.81
 
-<b>UPDATE:</b> Even though the CatBoost regression obtained the highest r2 score, the linear regression model with regularization could still be a better choice. In the future, we could compare the above models and choose one based on mock predictions made from the Flask application.
+* RoBERTa with PyTorch: 0.87 (after only 1 epoch on 1 fold of data)
+
+With a more powerful machine, I think we can achieve a robust model knowing the granular differences between recommended and non-recommended reviews. Here is an example of some predictions made from the model using a few samples from another fold that model wasn't trained on:
+
+![alt text](https://github.com/elayer/Amazon-Computer-Project/blob/main/amazon_homepage.png "Website Homepage")
 
 ## Productionization
 I created a Flask API hosted on a local webserver. For this step I primarily followed the productionization step from the YouTube tutorial series found in the refernces above. This endpoint could be used to take in certain aspects of a computer, make appropriate transformations to the variables, and return a predicted price for a computer.  
