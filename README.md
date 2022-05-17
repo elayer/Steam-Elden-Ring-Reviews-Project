@@ -99,4 +99,4 @@ With a more powerful machine, I think we can achieve a robust model knowing the 
 ## Future Improvements
 There were some reviews containing bad language, which lead to the reviews being purely negative but not much insight to generate from them alone. Perhaps if I trained the models again, I could include more words in the stop words collection for the vectorizers and algorithms to ignore. In addition to this, perhaps I could locate reviews that simply repeat some phrase that doesn't connect to the quality of the game for the purposes of the review, and drop them from the collection of texts.
 
-It's sometimes difficult to locate all of the insincere reviews, especially on Steam. However, I think this could lead to more elaborate topics potentially being found.
+It's sometimes difficult to locate all of the insincere reviews, especially on Steam. However, I think this could lead to more elaborate and discrete topics potentially being found.
