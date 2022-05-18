@@ -62,9 +62,11 @@ After collecting data, I performed several necessary text cleaning steps in orde
 * Lastly, in order to maintain the integrity of the reviews, I dropped reviews that were less than 15 characters long to maintain reviews conducive to NLP algorithms. I also removed reviews more than 512 characters long for the PyTorch model to operate on the reviews correctly
 
 ## EDA
-Some noteable findings from performing exploratory data analysis can be seen below. I found from looking at the Bi-Grams of the words in the reviews corpus, a lot of them primarily vaunted the game with a few exceptions mainly geared at pointing out performance issues. Similar sentiments can be seen in uni and tri-grams as well. The Chi2 influential term analysis graph is the most interesting to me. I found words that primarily distinguish between positive and negative reviews dealt with screen ultrawide support and performance issues such as crashes. The last picture looks at the LDA results chart, with one topic being comprised of positive comments. The negative topic comprises mainly words related to the performance of the game.
+Some noteable findings from performing exploratory data analysis can be seen below. I found from looking at the Bi-Grams of the words in the reviews corpus, a lot of them primarily vaunted the game, compared Elden Ring to similar games, or were geared at pointing out performance issues. Similar sentiments can be seen in uni and tri-grams as well (in EDA notebook). The Chi2 influential term analysis graph is the most interesting to me. 
 
-![alt text](https://github.com/elayer/Steam-Elden-Ring-Reviews-Project/blob/main/bigrams_picture.png "BiGrams Counts")
+I found words that primarily distinguish between positive and negative reviews dealt with screen ultrawide support and performance issues such as crashes. The last picture looks at the LDA results chart, with one topic being comprised of positive comments. The negative topic comprises mainly words related to the performance of the game.
+
+![alt text](https://github.com/elayer/Steam-Elden-Ring-Reviews-Project/blob/main/bigrams_picture_2.png "BiGrams Counts")
 ![alt text](https://github.com/elayer/Steam-Elden-Ring-Reviews-Project/blob/main/chi2_picture.png "Chi2 Influential Words")
 ![alt text](https://github.com/elayer/Steam-Elden-Ring-Reviews-Project/blob/main/lda_picture.png "LDA Topic Example")
 
