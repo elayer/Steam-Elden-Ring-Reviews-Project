@@ -98,6 +98,6 @@ With a more powerful machine, I think we can achieve a robust model knowing the 
 ![alt text](https://github.com/elayer/Steam-Elden-Ring-Reviews-Project/blob/main/1foldpreds.png "Example PyTorch Predictions")
 
 ## Future Improvements
-There were some reviews containing bad language, which lead to the reviews being purely negative but not much insight to generate from them alone. Perhaps if I trained the models again, I could include more words in the stop words collection for the vectorizers and algorithms to ignore. In addition to this, perhaps I could locate reviews that simply repeat some phrase that doesn't connect to the quality of the game for the purposes of the review, and drop them from the collection of texts.
+I came back to remove remove words from the N-gram analysis to locate more genuine phrase occurences. I was able to dig up more relevant review content to the game this way.
 
 It's sometimes difficult to locate all of the insincere reviews, especially on Steam. However, I think this could lead to more elaborate and discrete topics potentially being found.
