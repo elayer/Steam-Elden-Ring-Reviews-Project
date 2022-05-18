@@ -65,7 +65,6 @@ After collecting data, I performed several necessary text cleaning steps in orde
 Some noteable findings from performing exploratory data analysis can be seen below. I found from looking at the Bi-Grams of the words in the reviews corpus, a lot of them primarily vaunted the game with a few exceptions mainly geared at pointing out performance issues. Similar sentiments can be seen in uni and tri-grams as well. The Chi2 influential term analysis graph is the most interesting to me. I found words that primarily distinguish between positive and negative reviews dealt with screen ultrawide support and performance issues such as crashes. The last picture looks at the LDA results chart, with one topic being comprised of positive comments. The negative topic comprises mainly words related to the performance of the game.
 
 ![alt text](https://github.com/elayer/Steam-Elden-Ring-Reviews-Project/blob/main/bigrams_picture.png "BiGrams Counts")
-![alt text](https://github.com/elayer/Steam-Elden-Ring-Reviews-Project/blob/main/stylecloud.png "Word Stylecloud")
 ![alt text](https://github.com/elayer/Steam-Elden-Ring-Reviews-Project/blob/main/chi2_picture.png "Chi2 Influential Words")
 ![alt text](https://github.com/elayer/Steam-Elden-Ring-Reviews-Project/blob/main/lda_picture.png "LDA Topic Example")
 
