@@ -16,8 +16,6 @@ LDA (Latent Dirichlet Analysis) and LSA (Latent Semantic Analysis) to extract to
 
 **Packages:** numpy, pandas, requests, beautiful soup, matplotlib, seaborn, sklearn, huggingface transformers, pytorch, nltk, gensim, spacy, re
 
-**Web Framework Requirements Command:** ```pip install -r requirements.txt```
-
 ## References:
 
 * Various project structure and process elements were learned from Ken Jee's YouTube series: 
